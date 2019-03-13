@@ -40,7 +40,7 @@ const pies = [
       ingredients: 'Pecans, sugar, butter, flour',
       bakeTemp: 5000,
       drinkPairing: 'Milk',
-      imageURL: 'https://cookiesandcups.com/wp-content/uploads/2018/10/pecanpie-3.jpg',
+      imageUrl: 'https://cookiesandcups.com/wp-content/uploads/2018/10/pecanpie-3.jpg',
       instructor: 'Saul',
       iceCream: 'Vanilla',
     },
@@ -49,7 +49,7 @@ const pies = [
       ingredients: 'lemons, sugar, butter, flour',
       bakeTemp: 5000,
       drinkPairing: 'Water',
-      imageURL: 'https://www.williams-sonoma.com/wsimgs/rk/images/dp/recipe/201851/0020/img38l.jpg',
+      imageUrl: 'https://www.williams-sonoma.com/wsimgs/rk/images/dp/recipe/201851/0020/img38l.jpg',
       instructor: 'Saul',
       iceCream: 'none',
     },
@@ -63,27 +63,62 @@ const printToDom = (divId, textToprint) => {             ///prints to the dom
     selectedDiv.innerHTML = textToprint;
 }
 
-    const PieBuilder = () => {
+    const PieBuilder = (monkeybutts) => {
         // bus domstring from bus paramenter , (bus) is the parameter, for loop
         let domString ='';
        // for (let i = 0; i < pies.length; i++) {
        //     domString +=  `<h1>Name:${pies[i].name}</h1>`;
         
 
-        pies.forEach((pie) => {
+        monkeybutts.forEach((pie) => {
+            domString += `<div class ="card">`;
             domString += `<h2>${pie.name}</h2>` ;
+            domString += `<img src=${pie.imageUrl}>`;
+            domString += `</div>`;
     })
             
          
         
-        printToDom('pies',domString); 
+        printToDom('pies', domString); 
 
     
     };
 
+      const buttonClick =(e) => {
+        const buttonId = e.target.id;
+        
+        const selectedPies = [];
+        pies.forEach((pie) => {
+            if (pie.instructor === buttonId) {
+                selectedPies.push(pie);
+            
+            }
+          });
+
+          if (buttonId === 'All') {
+            PieBuilder(pies);
+          } else {
+
+  PieBuilder(selectedPies);
+
+      };
+
+
+    
+    }
+  
+
+      const buttonEvents = () => {
+        document.getElementById('Zoe').addEventListener('click', buttonClick);
+        document.getElementById('Saul').addEventListener('click', buttonClick);
+        document.getElementById('Michael').addEventListener('click', buttonClick);
+        document.getElementById('All').addEventListener('click', buttonClick);
+       };
 
     const init =() => {
-        PieBuilder();
+        PieBuilder(pies);
+        buttonEvents();
+
  };   
 
     init();
